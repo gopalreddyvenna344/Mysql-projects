@@ -140,3 +140,15 @@ mysql> select ano,aname from account;
 | 105 | kaur  |
 +-----+-------+
 5 rows in set (0.00 sec)
+mysql> select ano,trono,aname,amount,dot from account a,transact t where ano=trono amount <=3000;
+
+mysql> select distinct ano from transact;
++------+
+| ano  |
++------+
+|  101 |
+|  102 |
+|  103 |
+|  105 |
++------+
+4 rows in set (0.00 sec)
