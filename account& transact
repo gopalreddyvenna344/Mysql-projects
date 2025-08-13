@@ -1,0 +1,142 @@
+mysql> use emp_6604;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_emp_6604 |
++--------------------+
+| account            |
+| departments        |
+| employees          |
+| teacher            |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from account;
++-----+-------+----------+
+| ano | aname | address  |
++-----+-------+----------+
+| 101 | niraj | banglore |
+| 102 | rohan | chennai  |
++-----+-------+----------+
+2 rows in set (0.00 sec)
+
+mysql> create table transact(trono int(10)primary key,ano int(10),amount decimal(10,2),type varchar(30),foreign key(ano)references account (ano));
+Query OK, 0 rows affected, 2 warnings (0.08 sec)
+
+mysql> desc transact;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| trono  | int           | NO   | PRI | NULL    |       |
+| ano    | int           | YES  | MUL | NULL    |       |
+| amount | decimal(10,2) | YES  |     | NULL    |       |
+| type   | varchar(30)   | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table transact add column dot varchar(10);
+Query OK, 0 rows affected (0.20 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into transact values(001,101,1200,"withdraw","2024-12-01");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into transact values(002,102,45000,"deposit","2024-12-01");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into account values(104,"jain","chennai");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into account values(105,"kaur","goa");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from account;
++-----+-------+----------+
+| ano | aname | address  |
++-----+-------+----------+
+| 101 | niraj | banglore |
+| 102 | rohan | chennai  |
+| 104 | jain  | chennai  |
+| 105 | kaur  | goa      |
++-----+-------+----------+
+4 rows in set (0.00 sec)
+
+mysql> insert into account values(103,"kaur","goa");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from account;
++-----+-------+----------+
+| ano | aname | address  |
++-----+-------+----------+
+| 101 | niraj | banglore |
+| 102 | rohan | chennai  |
+| 103 | kaur  | goa      |
+| 104 | jain  | chennai  |
+| 105 | kaur  | goa      |
++-----+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into transact values(004,105,1200,"deposit","2024-12-01");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into transact values(005,105,1000,"withdraw","2024-12-02");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into transact values(006,103,1010,"withdraw","2024-12-02");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from account;
++-----+-------+----------+
+| ano | aname | address  |
++-----+-------+----------+
+| 101 | niraj | banglore |
+| 102 | rohan | chennai  |
+| 103 | kaur  | goa      |
+| 104 | jain  | chennai  |
+| 105 | kaur  | goa      |
++-----+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from transact;
++-------+------+----------+----------+------------+
+| trono | ano  | amount   | type     | dot        |
++-------+------+----------+----------+------------+
+|     1 |  101 |  1200.00 | withdraw | 2024-12-01 |
+|     2 |  102 | 45000.00 | deposit  | 2024-12-01 |
+|     4 |  105 |  1200.00 | deposit  | 2024-12-01 |
+|     5 |  105 |  1000.00 | withdraw | 2024-12-02 |
+|     6 |  103 |  1010.00 | withdraw | 2024-12-02 |
++-------+------+----------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select ano,amount from transact where dot between '2024-12-01' and '2024-12-02';
++------+----------+
+| ano  | amount   |
++------+----------+
+|  101 |  1200.00 |
+|  102 | 45000.00 |
+|  105 |  1200.00 |
+|  105 |  1000.00 |
+|  103 |  1010.00 |
++------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from account where ano="102";
++-----+-------+---------+
+| ano | aname | address |
++-----+-------+---------+
+| 102 | rohan | chennai |
++-----+-------+---------+
+1 row in set (0.00 sec)
+
+mysql> select ano,aname from account;
++-----+-------+
+| ano | aname |
++-----+-------+
+| 101 | niraj |
+| 102 | rohan |
+| 103 | kaur  |
+| 104 | jain  |
+| 105 | kaur  |
++-----+-------+
+5 rows in set (0.00 sec)
