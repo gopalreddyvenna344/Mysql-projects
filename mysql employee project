@@ -1,0 +1,207 @@
+
+
+mysql> create database emp_mini6604;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+
+|
+| emp_mini6604       |       |
++--------------------+
+21 rows in set (0.00 sec)
+
+mysql> use emp_mini6604;
+Database changed
+mysql> create table departments(department_id int(20) primary key,department_name varchar(50));
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> desc departments;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| department_id   | int         | NO   | PRI | NULL    |       |
+| department_name | varchar(50) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table employees(employee_id int(10) primary key,f_name varchar(50),l_name varchar(20),department_id int(20),salary decimal(10,2),FOREIGN  KEY(department_id)REFERENCES departments(department_id));
+Query OK, 0 rows affected, 2 warnings (0.08 sec)
+
+mysql> desc employees;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| employee_id   | int           | NO   | PRI | NULL    |       |
+| f_name        | varchar(50)   | YES  |     | NULL    |       |
+| l_name        | varchar(20)   | YES  |     | NULL    |       |
+| department_id | int           | YES  | MUL | NULL    |       |
+| salary        | decimal(10,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into departments values(101,"sales");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into departments values(102,"marketing");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from departments;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|           101 | sales           |
+|           102 | marketing       |
++---------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into employees values(1,"gopalreddy","venna",102,50000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(2,"javed","sk",101,45000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(3,"nikihi","p",101,45000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(4,"ajay","p",102,42000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(5,"teja","s",102,42002);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(6,"srinu","p",101,47000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employees;
++-------------+------------+--------+---------------+----------+
+| employee_id | f_name     | l_name | department_id | salary   |
++-------------+------------+--------+---------------+----------+
+|           1 | gopalreddy | venna  |           102 | 50000.00 |
+|           2 | javed      | sk     |           101 | 45000.00 |
+|           3 | nikihi     | p      |           101 | 45000.00 |
+|           4 | ajay       | p      |           102 | 42000.00 |
+|           5 | teja       | s      |           102 | 42002.00 |
+|           6 | srinu      | p      |           101 | 47000.00 |
++-------------+------------+--------+---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into departments values(103,"advertaising");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into departments values(104,"marts");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(7,"teja1","s",104,44002);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employees values(8,"teja2","s",103,44044);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employees;
++-------------+------------+--------+---------------+----------+
+| employee_id | f_name     | l_name | department_id | salary   |
++-------------+------------+--------+---------------+----------+
+|           1 | gopalreddy | venna  |           102 | 50000.00 |
+|           2 | javed      | sk     |           101 | 45000.00 |
+|           3 | nikihi     | p      |           101 | 45000.00 |
+|           4 | ajay       | p      |           102 | 42000.00 |
+|           5 | teja       | s      |           102 | 42002.00 |
+|           6 | srinu      | p      |           101 | 47000.00 |
+|           7 | teja1      | s      |           104 | 44002.00 |
+|           8 | teja2      | s      |           103 | 44044.00 |
++-------------+------------+--------+---------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from employees order by department_id;
++-------------+------------+--------+---------------+----------+
+| employee_id | f_name     | l_name | department_id | salary   |
++-------------+------------+--------+---------------+----------+
+|           2 | javed      | sk     |           101 | 45000.00 |
+|           3 | nikihi     | p      |           101 | 45000.00 |
+|           6 | srinu      | p      |           101 | 47000.00 |
+|           1 | gopalreddy | venna  |           102 | 50000.00 |
+|           4 | ajay       | p      |           102 | 42000.00 |
+|           5 | teja       | s      |           102 | 42002.00 |
+|           8 | teja2      | s      |           103 | 44044.00 |
+|           7 | teja1      | s      |           104 | 44002.00 |
++-------------+------------+--------+---------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select employees.f_name,employees.l_name,departments.department_name FROM employees JOIN departments ON employees.department_id=departments.department_id;
++------------+--------+-----------------+
+| f_name     | l_name | department_name |
++------------+--------+-----------------+
+| javed      | sk     | sales           |
+| nikihi     | p      | sales           |
+| srinu      | p      | sales           |
+| gopalreddy | venna  | marketing       |
+| ajay       | p      | marketing       |
+| teja       | s      | marketing       |
+| teja2      | s      | advertaising    |
+| teja1      | s      | marts           |
++------------+--------+-----------------+
+8 rows in set (0.00 sec)
+
+mysql> select departments.department_name,COUNT(employees.employee_id)AS total_employees FROM departments LEFT JOIN employees ON departments.department_id=employees.department_id GROUP BY departments.department_name;
++-----------------+-----------------+
+| department_name | total_employees |
++-----------------+-----------------+
+| sales           |               3 |
+| marketing       |               3 |
+| advertaising    |               1 |
+| marts           |               1 |
++-----------------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select MAX(salary)AS highest_salary FROM employees;
++----------------+
+| highest_salary |
++----------------+
+|       50000.00 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employees WHERE salary >40000
+    -> ;
++-------------+------------+--------+---------------+----------+
+| employee_id | f_name     | l_name | department_id | salary   |
++-------------+------------+--------+---------------+----------+
+|           1 | gopalreddy | venna  |           102 | 50000.00 |
+|           2 | javed      | sk     |           101 | 45000.00 |
+|           3 | nikihi     | p      |           101 | 45000.00 |
+|           4 | ajay       | p      |           102 | 42000.00 |
+|           5 | teja       | s      |           102 | 42002.00 |
+|           6 | srinu      | p      |           101 | 47000.00 |
+|           7 | teja1      | s      |           104 | 44002.00 |
+|           8 | teja2      | s      |           103 | 44044.00 |
++-------------+------------+--------+---------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from employees WHERE salary >40000;
++-------------+------------+--------+---------------+----------+
+| employee_id | f_name     | l_name | department_id | salary   |
++-------------+------------+--------+---------------+----------+
+|           1 | gopalreddy | venna  |           102 | 50000.00 |
+|           2 | javed      | sk     |           101 | 45000.00 |
+|           3 | nikihi     | p      |           101 | 45000.00 |
+|           4 | ajay       | p      |           102 | 42000.00 |
+|           5 | teja       | s      |           102 | 42002.00 |
+|           6 | srinu      | p      |           101 | 47000.00 |
+|           7 | teja1      | s      |           104 | 44002.00 |
+|           8 | teja2      | s      |           103 | 44044.00 |
++-------------+------------+--------+---------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from employees WHERE salary >45000;
++-------------+------------+--------+---------------+----------+
+| employee_id | f_name     | l_name | department_id | salary   |
++-------------+------------+--------+---------------+----------+
+|           1 | gopalreddy | venna  |           102 | 50000.00 |
+|           6 | srinu      | p      |           101 | 47000.00 |
++-------------+------------+--------+---------------+----------+
+2 rows in set (0.00 sec)
+
+mysql>
